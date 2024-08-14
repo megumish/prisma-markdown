@@ -45,6 +45,7 @@ generator markdown {
 ///
 /// @namespace Actors
 /// @namespace Relations
+/// @namespace Relations2
 /// @author Samchon
 model drive_customers {
   //----
@@ -138,6 +139,7 @@ model drive_customers {
 ///
 /// @namespace Actors
 /// @namespace Relations
+/// @namespace Relations2
 /// @author Samchon
 model drive_external_users {
   //----
