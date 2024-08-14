@@ -4,6 +4,7 @@
 - [Actors](#actors)
 - [Repositories](#repositories)
 - [Relations](#relations)
+- [Relations2](#relations2)
 
 ## Actors
 ```mermaid
@@ -1239,3 +1240,123 @@ Search tag of repository.
   - `value`: Search tag value.
   - `sequence`: Creation time of record.
   - `created_at`: 
+
+
+## Relations2
+```mermaid
+erDiagram
+"drive_customers" {
+  String id PK
+  String drive_member_id FK "nullable"
+  String drive_external_user_id FK "nullable"
+  String drive_citizen_id FK "nullable"
+  String href
+  String referrer
+  String ip
+  DateTime created_at
+}
+"drive_external_users" {
+  String id PK
+  String application
+  String uid
+  String nickname
+  String data "nullable"
+  String password
+  DateTime created_at
+}
+"drive_customers" }o--o| "drive_external_users" : external_user
+```
+
+### `drive_customers`
+Customer information, but not a person but a **connection** basis.
+
+`drive_customers` is an entity that literally embodies the information
+of those who participated in the drive system as customers. By the way,
+the `drive_customers` does not mean a person, but a **connection** basis.
+Therefore, even if the same person connects to the drive system multiple,
+multiple records are created in `drive_customers`.
+
+The first purpose of this is to track the customer's inflow path in detail,
+and it is for cases where the same person enters as a non-member, reads a
+[repository file](#drive_repository_files) in advance, and registers/logs
+in at the moment for modification. It is the second. Lastly, it is to
+accurately track the activities that a person performs at the drive system
+in various ways like below.
+
+- Same person comes from an [external service](#drive_external_users)
+- Same person creates multiple [accounts](#drive_members)
+- Same person makes a download with only [real name authentication](#drive_citizens)
+
+Therefore, `drive_customers` can have multiple records with the same
+[drive_citizens](#drive_citizens), [drive_members](#drive_members), and [drive_external_users](#drive_external_users).
+Additionally, if a customer signs up for membership after verifying their real
+name or signs up for our service after being a user of an external service,
+all related records are changed at once. Therefore, identification and tracking
+of customers can be done very systematically.
+
+**Properties**
+  - `id`: Primary Key.
+  - `drive_member_id`: Belonged member's [drive_members.id](#drive_members)
+  - `drive_external_user_id`: Belonged external service user's [drive_external_users.id](#drive_external_users)
+  - `drive_citizen_id`: Belonged citizen's [drive_citizens.id](#drive_citizens)
+  - `href`
+    > Connection URL.
+    > 
+    > [window.location.href](#window)
+  - `referrer`
+    > Referrer URL.
+    > 
+    > [window.document.referrer](#window)
+  - `ip`: IP address,
+  - `created_at`
+    > Creation time of record.
+    > 
+    > It means the time when the customer connected to the drive system.
+
+### `drive_external_users`
+External user information.
+
+`drive_external_users` is an entity dsigned for when this system needs
+to connect with external services and welcome their users as customers of
+this service.
+
+For reference, customers who connect from an external service must have
+this record, and the external service user is identified through the two
+attributes `application` and `uid`. If a customer connected from an
+external service completes [real-name authentication](#drive_citizens)
+from this service, each time the external service user reconnects to this
+service and issues a new [customer](#drive_customers) authentication
+token, [real-name authentication](#drive_citizens) begins with
+completed.
+
+And `password` is the password issued to the user by the external service
+system (the so-called permanent user authentication token), and is never
+the actual user password. However, for customers who entered the same
+`application` and `uid` as the current external system user, this is to
+determine whether to view this as a correct external system user or a
+violation.
+
+In addition, additional information received from external services can
+be recorded in the `data` field in JSON format.
+
+**Properties**
+  - `id`: Primary Key.
+  - `application`
+    > Identifier code of the external service.
+    > 
+    > It can be same with [drive_channels.code](#drive_channels) in common.
+  - `uid`: Identifier key of external user from the external system.
+  - `nickname`: Nickname of external user in the external system.
+  - `data`: Additional information about external user from the external system.
+  - `password`
+    > Password of external user from the external system.
+    > 
+    > This is a password issued to the user by an external service, and is
+    > by no means the actual user password. However, for customers who
+    > entered the same application and code as the current external system
+    > user, this is to determine whether to view this as a correct external
+    > system user or a violation.
+  - `created_at`
+    > Creation time of record.
+    > 
+    > Another word, first time when the external user connected.
