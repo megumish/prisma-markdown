@@ -3,6 +3,7 @@
 
 - [Actors](#actors)
 - [Repositories](#repositories)
+- [Relations](#relations)
 
 ## Actors
 ```mermaid
@@ -125,28 +126,28 @@ erDiagram
 ### `drive_customers`
 Customer information, but not a person but a **connection** basis.
 
-`drive_customers` is an entity that literally embodies the information 
-of those who participated in the drive system as customers. By the way, 
+`drive_customers` is an entity that literally embodies the information
+of those who participated in the drive system as customers. By the way,
 the `drive_customers` does not mean a person, but a **connection** basis.
 Therefore, even if the same person connects to the drive system multiple,
 multiple records are created in `drive_customers`.
 
-The first purpose of this is to track the customer's inflow path in detail, 
-and it is for cases where the same person enters as a non-member, reads a 
-[repository file](#drive_repository_files) in advance, and registers/logs 
-in at the moment for modification. It is the second. Lastly, it is to 
-accurately track the activities that a person performs at the drive system 
+The first purpose of this is to track the customer's inflow path in detail,
+and it is for cases where the same person enters as a non-member, reads a
+[repository file](#drive_repository_files) in advance, and registers/logs
+in at the moment for modification. It is the second. Lastly, it is to
+accurately track the activities that a person performs at the drive system
 in various ways like below.
 
 - Same person comes from an [external service](#drive_external_users)
 - Same person creates multiple [accounts](#drive_members)
 - Same person makes a download with only [real name authentication](#drive_citizens)
 
-Therefore, `drive_customers` can have multiple records with the same 
-[drive_citizens](#drive_citizens), [drive_members](#drive_members), and [drive_external_users](#drive_external_users). 
-Additionally, if a customer signs up for membership after verifying their real 
-name or signs up for our service after being a user of an external service, 
-all related records are changed at once. Therefore, identification and tracking 
+Therefore, `drive_customers` can have multiple records with the same
+[drive_citizens](#drive_citizens), [drive_members](#drive_members), and [drive_external_users](#drive_external_users).
+Additionally, if a customer signs up for membership after verifying their real
+name or signs up for our service after being a user of an external service,
+all related records are changed at once. Therefore, identification and tracking
 of customers can be done very systematically.
 
 **Properties**
@@ -171,27 +172,27 @@ of customers can be done very systematically.
 ### `drive_external_users`
 External user information.
 
-`drive_external_users` is an entity dsigned for when this system needs 
-to connect with external services and welcome their users as customers of 
+`drive_external_users` is an entity dsigned for when this system needs
+to connect with external services and welcome their users as customers of
 this service.
 
-For reference, customers who connect from an external service must have 
-this record, and the external service user is identified through the two 
-attributes `application` and `uid`. If a customer connected from an 
-external service completes [real-name authentication](#drive_citizens) 
-from this service, each time the external service user reconnects to this 
-service and issues a new [customer](#drive_customers) authentication 
-token, [real-name authentication](#drive_citizens) begins with 
+For reference, customers who connect from an external service must have
+this record, and the external service user is identified through the two
+attributes `application` and `uid`. If a customer connected from an
+external service completes [real-name authentication](#drive_citizens)
+from this service, each time the external service user reconnects to this
+service and issues a new [customer](#drive_customers) authentication
+token, [real-name authentication](#drive_citizens) begins with
 completed.
 
-And `password` is the password issued to the user by the external service 
-system (the so-called permanent user authentication token), and is never 
-the actual user password. However, for customers who entered the same 
-`application` and `uid` as the current external system user, this is to 
-determine whether to view this as a correct external system user or a 
+And `password` is the password issued to the user by the external service
+system (the so-called permanent user authentication token), and is never
+the actual user password. However, for customers who entered the same
+`application` and `uid` as the current external system user, this is to
+determine whether to view this as a correct external system user or a
 violation.
 
-In addition, additional information received from external services can 
+In addition, additional information received from external services can
 be recorded in the `data` field in JSON format.
 
 **Properties**
@@ -206,10 +207,10 @@ be recorded in the `data` field in JSON format.
   - `password`
     > Password of external user from the external system.
     > 
-    > This is a password issued to the user by an external service, and is 
-    > by no means the actual user password. However, for customers who 
-    > entered the same application and code as the current external system 
-    > user, this is to determine whether to view this as a correct external 
+    > This is a password issued to the user by an external service, and is
+    > by no means the actual user password. However, for customers who
+    > entered the same application and code as the current external system
+    > user, this is to determine whether to view this as a correct external
     > system user or a violation.
   - `created_at`
     > Creation time of record.
@@ -219,16 +220,16 @@ be recorded in the `data` field in JSON format.
 ### `drive_citizens`
 Citizen verification information.
 
-`drive_citizens` is an entity that records the user's real name and 
+`drive_citizens` is an entity that records the user's real name and
 mobile input information.
 
-For reference, in South Korea, real name authentication is required for 
-[employeed](#drive_enterprise_employees) people, so the `name` attribute 
-is important. However, the situation is different overseas, so in reality, 
-`mobile` attributes are the most important, and identification of individual 
+For reference, in South Korea, real name authentication is required for
+[employeed](#drive_enterprise_employees) people, so the `name` attribute
+is important. However, the situation is different overseas, so in reality,
+`mobile` attributes are the most important, and identification of individual
 users is also done based on this mobile.
 
-Of course, real name and mobile phone authentication information are 
+Of course, real name and mobile phone authentication information are
 encrypted and stored.
 
 **Properties**
@@ -244,13 +245,13 @@ encrypted and stored.
 ### `drive_members`
 Member Account.
 
-`drive_members` is an entity that symbolizes the case when a user 
-signs up as a member of this system. 
+`drive_members` is an entity that symbolizes the case when a user
+signs up as a member of this system.
 
-For reference, it is possible to travel other public 
-[repositories](#drive_repositories) without joining membership. Otherwise, 
-if you want to create your own repository or participate into some 
-[enterprise](#drive_enterprises) as an 
+For reference, it is possible to travel other public
+[repositories](#drive_repositories) without joining membership. Otherwise,
+if you want to create your own repository or participate into some
+[enterprise](#drive_enterprises) as an
 [employee](#drive_enterprise_employees), you must join as a member.
 
 **Properties**
@@ -282,22 +283,22 @@ email addresses, just use only one.
 ### `drive_accounts`
 Account entity.
 
-`drive_accounts` is an entity that represents the accounts of the drive 
-system. An account is a subject unit with a unique identifier code and can 
-own storage, etc. For example, if the address of a specific repository on 
-GitHub is https://github.com/samchon/typia, "samchon" is the account 
+`drive_accounts` is an entity that represents the accounts of the drive
+system. An account is a subject unit with a unique identifier code and can
+own storage, etc. For example, if the address of a specific repository on
+GitHub is https://github.com/samchon/typia, "samchon" is the account
 identifier and the owner of the repository called "typia".
 
-And the account referred to here does not necessarily refer to a person. This 
-is because the account holder may be a [member](#drive_members), but it 
-may also be an [enterprise](#drive_enterprises). For example, in the case 
-of https://github.com/Microsoft/TypeScript, the account owner is not a person, 
+And the account referred to here does not necessarily refer to a person. This
+is because the account holder may be a [member](#drive_members), but it
+may also be an [enterprise](#drive_enterprises). For example, in the case
+of https://github.com/Microsoft/TypeScript, the account owner is not a person,
 but Microsoft, an enterprise.
 
-In addition, an account can change its owner. And when changing ownership, it 
-is also possible for the entity to change from an individual to an enterprise. 
-For example, this may be the case when an account or repository that started 
-as an individual becomes successful and is promoted to an enterprise in the 
+In addition, an account can change its owner. And when changing ownership, it
+is also possible for the entity to change from an individual to an enterprise.
+For example, this may be the case when an account or repository that started
+as an individual becomes successful and is promoted to an enterprise in the
 future.
 
 **Properties**
@@ -309,15 +310,15 @@ future.
 ### `drive_enterprises`
 Enterprise, a enterprise entity.
 
-drive_enterprises is an entity that symbolizes an enterprise, and literally 
-refers to the subjects participating in the drive system on a enterprise basis. 
-And in the case of enterprise, unlike [member](#drive_members), it must 
+drive_enterprises is an entity that symbolizes an enterprise, and literally
+refers to the subjects participating in the drive system on a enterprise basis.
+And in the case of enterprise, unlike [member](#drive_members), it must
 have an [account](#drive_accounts).
 
-Enterprises also have as sub-entities [employees](#drive_enterprise_employees) 
-and [teams](#drive_enterprise_teams) composed of them. And among these, 
-a team can have its [companions](#drive_enterprise_team_companions) 
-collectively have the same [access rights](#drive_repository_accesses) to 
+Enterprises also have as sub-entities [employees](#drive_enterprise_employees)
+and [teams](#drive_enterprise_teams) composed of them. And among these,
+a team can have its [companions](#drive_enterprise_team_companions)
+collectively have the same [access rights](#drive_repository_accesses) to
 enterprise [repositories](#drive_repositories).
 
 **Properties**
@@ -331,16 +332,16 @@ enterprise [repositories](#drive_repositories).
 ### `drive_enterprise_employees`
 Employee entity within a enterprise.
 
-`drive_enterprise_employees` is an entity that represents employees belonging 
-to an [enterprise](#drive_enterprises). Employees work as part of each 
-[team](#drive_enterprise_teams) within the enterprise, and are granted 
-[accessibility](#drive_repository_accesses) on a team-by-team basis from 
+`drive_enterprise_employees` is an entity that represents employees belonging
+to an [enterprise](#drive_enterprises). Employees work as part of each
+[team](#drive_enterprise_teams) within the enterprise, and are granted
+[accessibility](#drive_repository_accesses) on a team-by-team basis from
 the enterprise's repository.
 
-Please note that only those who have registered as [members](#drive_members) 
-of this drive system can be 
-[appointed](#drive_enterprise_employee_appointments) as employees, and it 
-is possible for one person to belong to multiple enterprises as an employee at 
+Please note that only those who have registered as [members](#drive_members)
+of this drive system can be
+[appointed](#drive_enterprise_employee_appointments) as employees, and it
+is possible for one person to belong to multiple enterprises as an employee at
 the same time.
 
 **Properties**
@@ -355,13 +356,13 @@ the same time.
 ### `drive_enterprise_employee_appointments`
 Employee Appointment Information.
 
-`drive_enterprise_employee_appointments` is an entity that embodies the history 
-of appointment and position change information of 
-[employees](#drive_enterprise_employees) within the 
+`drive_enterprise_employee_appointments` is an entity that embodies the history
+of appointment and position change information of
+[employees](#drive_enterprise_employees) within the
 [enterprise](#drive_enterprises).
 
-Therefore, this entity record is created once when a enterprise appoints 
-an employee, and is accumulated each time the employee changes his or her 
+Therefore, this entity record is created once when a enterprise appoints
+an employee, and is accumulated each time the employee changes his or her
 position thereafter.
 
 **Properties**
@@ -374,11 +375,11 @@ position thereafter.
 ### `drive_enterprise_teams`
 Team information within the enterprise.
 
-`drive_enterprise_teams` is an entity that embodies a team within an 
-[enterprise](#drive_enterprises). A team has 
-[employees](#drive_enterprise_employees) as 
-[companions](#drive_enterprise_team_companions), and each team can operate 
-by receiving [permission](#drive_repository_accesses) from the enterprise's 
+`drive_enterprise_teams` is an entity that embodies a team within an
+[enterprise](#drive_enterprises). A team has
+[employees](#drive_enterprise_employees) as
+[companions](#drive_enterprise_team_companions), and each team can operate
+by receiving [permission](#drive_repository_accesses) from the enterprise's
 [repository](#drive_repositories).
 
 **Properties**
@@ -393,15 +394,15 @@ by receiving [permission](#drive_repository_accesses) from the enterprise's
 ### `drive_enterprise_team_companions`
 Information about companion of teams within the enterprise.
 
-`drive_enterprise_team_companions` is an entity that represents which 
-[employees](#drive_enterprise_employees) are participating as companion in 
+`drive_enterprise_team_companions` is an entity that represents which
+[employees](#drive_enterprise_employees) are participating as companion in
 each [team](#drive_enterprise_teams) that makes up the enterprise.
 
-For reference, employees participate as companion of a team and are assigned 
-some kind of role, which may be different from their original position. 
-Additionally, it is possible for employees to belong to multiple teams at the 
-same time. This is similar to how it was possible for one member to be 
-[appointed](#drive_enterprise_employee_appointments) as an employee at 
+For reference, employees participate as companion of a team and are assigned
+some kind of role, which may be different from their original position.
+Additionally, it is possible for employees to belong to multiple teams at the
+same time. This is similar to how it was possible for one member to be
+[appointed](#drive_enterprise_employee_appointments) as an employee at
 multiple enterprises at the same time.
 
 **Properties**
@@ -416,13 +417,13 @@ multiple enterprises at the same time.
 ### `drive_enterprise_team_companion_appointments`
 Appointment information for team companions within the enterprise.
 
-`drive_enterprise_team_companion_appointments` is an entity that embodies 
-the history of appointment and role change information of 
-[team companion](#drive_enterprise_team_companions) within the 
+`drive_enterprise_team_companion_appointments` is an entity that embodies
+the history of appointment and role change information of
+[team companion](#drive_enterprise_team_companions) within the
 [enterprise](#drive_enterprises).
 
-Therefore, this entity record is first created when the team appoints a 
-companion, and is accumulated each time the companion changes roles 
+Therefore, this entity record is first created when the team appoints a
+companion, and is accumulated each time the companion changes roles
 thereafter.
 
 **Properties**
@@ -499,15 +500,15 @@ erDiagram
 ### `drive_repositories`
 Repository storing buckets.
 
-`drive_repositories` is an entity that represents individual repositories 
-within the drive system, and is similar to the Google Drive in online services. 
+`drive_repositories` is an entity that represents individual repositories
+within the drive system, and is similar to the Google Drive in online services.
 And physically, it is a concept that can be compared to a Disk Drive.
 
-And the repository belongs to a specific [account](#drive_accounts), and 
-the account owner who owns each repository may be a 
-[member](#drive_members) or an [enterprise](#drive_enterprises). In 
-addition, the account owner who created the repository can use the repository 
-with fellow members or [team](#drive_enterprise_teams) companion through 
+And the repository belongs to a specific [account](#drive_accounts), and
+the account owner who owns each repository may be a
+[member](#drive_members) or an [enterprise](#drive_enterprises). In
+addition, the account owner who created the repository can use the repository
+with fellow members or [team](#drive_enterprise_teams) companion through
 controlling [access rights](#drive_repository_accesses) to the repository.
 
 **Properties**
@@ -522,11 +523,11 @@ controlling [access rights](#drive_repository_accesses) to the repository.
 ### `drive_repository_buckets`
 Bucket information within the repository.
 
-`drive_repository_buckets` symbolizes buckets that exist in the 
-[repository](#drive_repositories), and corresponds to the supertype 
-entities of [folders](#drive_repository_folders), 
-[files](#drive_repository_files), and 
-[shortcut icons](#drive_repository_shortcuts), respectively. In other 
+`drive_repository_buckets` symbolizes buckets that exist in the
+[repository](#drive_repositories), and corresponds to the supertype
+entities of [folders](#drive_repository_folders),
+[files](#drive_repository_files), and
+[shortcut icons](#drive_repository_shortcuts), respectively. In other
 / words, it is a table that stores common information about files and folders.
 
 **Properties**
@@ -550,7 +551,7 @@ entities of [folders](#drive_repository_folders),
 ### `drive_repository_folders`
 Folder (directory).
 
-`drive_repository_folders` is an entity that represents a folder in the 
+`drive_repository_folders` is an entity that represents a folder in the
 [repository](#drive_repositories).
 
 **Properties**
@@ -559,10 +560,10 @@ Folder (directory).
 ### `drive_repository_files`
 File.
 
-`drive_repository_files` is an entity that represents files in the 
+`drive_repository_files` is an entity that represents files in the
 [repository](#drive_repositories).
 
-And the location where the file is physically stored is recorded in the 
+And the location where the file is physically stored is recorded in the
 attribute url.
 
 **Properties**
@@ -573,11 +574,11 @@ attribute url.
 ### `drive_repository_shortcuts`
 Shortcut icon.
 
-`drive_repository_shortcuts` is an entity that symbolizes a shortcut icon in 
-the [repository](#drive_repositories) and has a reference function for 
+`drive_repository_shortcuts` is an entity that symbolizes a shortcut icon in
+the [repository](#drive_repositories) and has a reference function for
 other [buckets](#drive_repository_buckets) in the repository.
 
-A concept that is exactly the same as a shortcut icon in Windows and 
+A concept that is exactly the same as a shortcut icon in Windows and
 a symbolic link in Linux.
 
 **Properties**
@@ -590,14 +591,14 @@ a symbolic link in Linux.
 ### `drive_repository_accesses`
 Storage access control.
 
-`drive_repository_accesses` is an entity that embodies the access authority 
-control of the [repository](#drive_repositories), and is an entity that 
-is recorded when the [account](#drive_accounts) owner distributes the 
-authority of the repository to other [members](#drive_members) or an 
+`drive_repository_accesses` is an entity that embodies the access authority
+control of the [repository](#drive_repositories), and is an entity that
+is recorded when the [account](#drive_accounts) owner distributes the
+authority of the repository to other [members](#drive_members) or an
 [enterprise team](#drive_enterprise_teams).
 
-For reference, the account owner who created the repository is also recorded 
-in access permission control. In other words, as soon as the account owner 
+For reference, the account owner who created the repository is also recorded
+in access permission control. In other words, as soon as the account owner
 creates the repository, one table record is created and started.
 
 **Properties**
