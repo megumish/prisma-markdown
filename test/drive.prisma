@@ -44,7 +44,7 @@ generator markdown {
 /// of customers can be done very systematically.
 ///
 /// @namespace Actors
-/// @erd Relations
+/// @namespace Relations
 /// @author Samchon
 model drive_customers {
   //----
@@ -137,7 +137,7 @@ model drive_customers {
 /// be recorded in the `data` field in JSON format.
 ///
 /// @namespace Actors
-/// @erd Relations
+/// @namespace Relations
 /// @author Samchon
 model drive_external_users {
   //----
@@ -197,7 +197,7 @@ model drive_external_users {
 /// encrypted and stored.
 ///
 /// @namespace Actors
-/// @erd Relations
+/// @namespace Relations
 /// @author Samchon
 model drive_citizens {
   //----
@@ -243,7 +243,7 @@ model drive_citizens {
 /// {@link drive_enterprise_employees employee}, you must join as a member.
 ///
 /// @namespace Actors
-/// @erd Relations
+/// @namespace Relations
 /// @author Samchon
 model drive_members {
   //----
@@ -298,7 +298,7 @@ model drive_members {
 /// email addresses, just use only one.
 ///
 /// @namespace Actors
-/// @erd Relations
+/// @namespace Relations
 /// @author Samchon
 model drive_member_emails {
   //----
@@ -347,7 +347,7 @@ model drive_member_emails {
 /// future.
 ///
 /// @namespace Actors
-/// @erd Relations
+/// @namespace Relations
 /// @author Samchon
 model drive_accounts {
   //----
@@ -393,7 +393,7 @@ model drive_accounts {
 /// enterprise {@link drive_repositories repositories}.
 ///
 /// @namespace Actors
-/// @erd Relations
+/// @namespace Relations
 /// @author Samchon
 model drive_enterprises {
   //----
@@ -444,7 +444,7 @@ model drive_enterprises {
 /// the same time.
 ///
 /// @namespace Actors
-/// @erd Relations
+/// @namespace Relations
 /// @author Samchon
 model drive_enterprise_employees {
   //----
@@ -498,7 +498,7 @@ model drive_enterprise_employees {
 /// position thereafter.
 ///
 /// @namespace Actors
-/// @erd Relations
+/// @namespace Relations
 /// @author Samchon
 model drive_enterprise_employee_appointments {
   //----
@@ -542,7 +542,7 @@ model drive_enterprise_employee_appointments {
 /// {@link drive_repositories repository}.
 ///
 /// @namespace Actors
-/// @erd Relations
+/// @namespace Relations
 /// @author Samchon
 model drive_enterprise_teams {
   //----
@@ -595,7 +595,7 @@ model drive_enterprise_teams {
 /// multiple enterprises at the same time.
 ///
 /// @namespace Actors
-/// @erd Relations
+/// @namespace Relations
 /// @author Samchon
 model drive_enterprise_team_companions {
   //----
@@ -648,7 +648,7 @@ model drive_enterprise_team_companions {
 /// thereafter.
 ///
 /// @namespace Actors
-/// @erd Relations
+/// @namespace Relations
 /// @author Samchon
 model drive_enterprise_team_companion_appointments {
   //----
@@ -699,7 +699,7 @@ model drive_enterprise_team_companion_appointments {
 /// controlling {@link drive_repository_accesses access rights} to the repository.
 ///
 /// @namespace Repositories
-/// @erd Relations
+/// @namespace Relations
 /// @author Samchon
 model drive_repositories {
   //----
@@ -752,7 +752,7 @@ model drive_repositories {
 //// words, it is a table that stores common information about files and folders.
 ///
 /// @namespace Repositories
-/// @erd Relations
+/// @namespace Relations
 /// @author Samchon
 model drive_repository_buckets {
   //----
@@ -821,7 +821,7 @@ model drive_repository_buckets {
 /// {@link drive_repositories repository}.
 ///
 /// @namespace Repositories
-/// @erd Relations
+/// @namespace Relations
 /// @author Samchon
 model drive_repository_folders {
   //----
@@ -848,7 +848,7 @@ model drive_repository_folders {
 /// attribute url.
 ///
 /// @namespace Repositories
-/// @erd Relations
+/// @namespace Relations
 /// @author Samchon
 model drive_repository_files {
   //----
@@ -882,7 +882,7 @@ model drive_repository_files {
 /// a symbolic link in Linux.
 ///
 /// @namespace Repositories
-/// @erd Relations
+/// @namespace Relations
 /// @author Samchon
 model drive_repository_shortcuts {
   //----
@@ -918,7 +918,7 @@ model drive_repository_shortcuts {
 /// creates the repository, one table record is created and started.
 ///
 /// @namespace Repositories
-/// @erd Relations
+/// @namespace Relations
 /// @author Samchon
 model drive_repository_accesses {
   //----
@@ -969,7 +969,7 @@ model drive_repository_accesses {
 /// Search tag of repository.
 ///
 /// @namespace Repositories
-/// @erd Relations
+/// @namespace Relations
 /// @author Samchon
 model drive_repository_tags {
   //----
